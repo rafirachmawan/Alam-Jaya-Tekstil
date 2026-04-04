@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "../lib/prisma";
-
+import * as bcrypt from "bcryptjs";
 import AuthService from "../services/authService";
 
 const jwtSecret = process.env.JWT_SECRET!;
@@ -9,16 +9,10 @@ const jwtSecret = process.env.JWT_SECRET!;
 type UserType = {
   id: string;
   name: string;
+  username: string;
   email: string;
   password: string;
-  role: "user" | "admin";
 };
-
-function createToken(id: number) {
-  return jwt.sign({ id }, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
-  });
-}
 
 function verifyToken(token: string) {
   try {
@@ -42,6 +36,7 @@ function parseCookies(cookieHeader: string | undefined) {
 
 function generateToken(credentials: {
   email: string;
+  username: string;
   name: string;
   role?: string;
 }) {
@@ -55,23 +50,30 @@ function generateToken(credentials: {
 }
 
 export async function login(req: Request, res: Response) {
-  const { email, password } = req.body as Pick<UserType, "email" | "password">;
+  const { username, password } = req.body as Pick<
+    UserType,
+    "username" | "password"
+  >;
 
   try {
-    if (email == null || password == null)
+    if (username == null || password == null)
       return res
         .status(400)
-        .json({ message: "Email and password are required" });
+        .json({ message: "username and password are required" });
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await prisma.user.findUnique({ where: { username } });
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    if (user.password !== password)
+    // Compare plain text password with hashed password using bcrypt
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid password" });
 
     const { accessToken, refreshToken } = generateToken({
-      email,
+      email: user.email,
+      username,
       name: user.name,
       role: user.role,
     });
@@ -96,7 +98,7 @@ export async function login(req: Request, res: Response) {
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });
 
-    res.status(200).json({ accessToken , refreshToken});
+    res.status(200).json({ accessToken, refreshToken });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -133,6 +135,7 @@ export async function getSession(req: Request, res: Response) {
           id: session.user.id,
           name: session.user.name,
           email: session.user.email,
+          username: session.user.username,
           role: session.user.role,
         },
         createdAt: session.createdAt,

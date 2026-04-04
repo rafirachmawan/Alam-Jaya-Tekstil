@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient, Role } from "../src/generated/prisma/client";
 import * as bcrypt from "bcryptjs";
 
 const connectionString = `${process.env.DATABASE_URL}`;
@@ -15,17 +15,34 @@ async function main() {
   const users = [
     {
       name: "Super Admin",
+      username: "superadmin",
       email: "superadmin@gmail.com",
       role: Role.SUPERADMIN,
     },
-    { name: "Bagian Potong", email: "potong@gmail.com", role: Role.POTONG },
+    {
+      name: "Bagian Potong",
+      username: "potong",
+      email: "potong@gmail.com",
+      role: Role.POTONG,
+    },
     {
       name: "Bagian Penjahit",
+      username: "penjahit",
       email: "penjahit@gmail.com",
       role: Role.PENJAHIT,
     },
-    { name: "Bagian Resi", email: "resi@gmail.com", role: Role.RESI },
-    { name: "Bagian Print", email: "print@gmail.com", role: Role.PRINT },
+    {
+      name: "Bagian Resi",
+      username: "resi",
+      email: "resi@gmail.com",
+      role: Role.RESI,
+    },
+    {
+      name: "Bagian Print",
+      username: "print",
+      email: "print@gmail.com",
+      role: Role.PRINT,
+    },
   ];
 
   console.log("Memulai seeding data user...");
@@ -37,6 +54,7 @@ async function main() {
       create: {
         name: u.name,
         email: u.email,
+        username: u.username,
         password: passwordHash,
         role: u.role,
       },
