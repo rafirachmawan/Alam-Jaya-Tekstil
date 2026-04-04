@@ -1,27 +1,15 @@
 import express from "express";
-import type { Request, Response } from "express";
-import { prisma } from "./lib/prisma";
+import cors from "cors";
+import postRoutes from "./routes/postRoutes";
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
-// Definisi route utama
-app.get('/', async (req: Request, res: Response) => {
-  try {
-    const allPosts = await prisma.post.findMany();
+app.use(express.json());
+app.use(cors())
 
-    res.json({
-      message: "Success",
-      data: allPosts
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Error fetching posts"
-    });
-  }
-});
+app.use(postRoutes);
 
-// Menjalankan server
 app.listen(port, () => {
   console.log(`Aplikasi berjalan di http://localhost:${port}`);
 });
