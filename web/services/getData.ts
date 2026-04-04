@@ -6,17 +6,17 @@ export const getData = async (url: string) => {
       setTimeout(() => {
         resolve({
           data: [
-            { id: 1, nama: "Jersey A", status: "menunggu" },
-            { id: 2, nama: "Jersey B", status: "menunggu" },
-            { id: 3, nama: "Jersey C", status: "menunggu" },
-            { id: 4, nama: "Jersey D", status: "menunggu" },
-            { id: 5, nama: "Jersey E", status: "menunggu" },
-            { id: 6, nama: "Jersey F", status: "menunggu" },
-            { id: 7, nama: "Hoodie G", status: "proses" },
-            { id: 8, nama: "Hoodie H", status: "proses" },
-            { id: 9, nama: "Hoodie I", status: "proses" },
-            { id: 10, nama: "Hoodie J", status: "proses" },
-            { id: 11, nama: "Kaos K", status: "selesai" },
+            { id: 1, nama: "Hodie Hitam", status: "menunggu" },
+            { id: 2, nama: "Jersey Putih", status: "menunggu" },
+            { id: 3, nama: "Jersey Bola", status: "menunggu" },
+            { id: 4, nama: "Kaos Hitam", status: "menunggu" },
+            { id: 5, nama: "Hodie Hitam", status: "menunggu" },
+            { id: 6, nama: "Kaos Putih", status: "menunggu" },
+            { id: 7, nama: "Hem Putih", status: "proses" },
+            { id: 8, nama: "Polo Putih", status: "proses" },
+            { id: 9, nama: "Polo Hitam", status: "proses" },
+            { id: 10, nama: "Kaos Hijau", status: "proses" },
+            { id: 11, nama: "Kaos Merah", status: "selesai" },
           ],
         });
       }, 1000);

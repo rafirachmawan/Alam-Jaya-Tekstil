@@ -123,7 +123,7 @@ export default function Dashboard() {
             ☰
           </button>
 
-          <h1 className="text-lg font-semibold text-gray-800">
+          <h1 className="text-lg font-semibold text-gray-700">
             Dashboard Produksi
           </h1>
 
@@ -141,13 +141,13 @@ export default function Dashboard() {
               {filteredOrders.map((order) => (
                 <div
                   key={order.id}
-                  className="bg-white rounded-2xl p-5 border hover:shadow-lg transition"
+                  className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition duration-200"
                 >
-                  <h2 className="font-semibold text-gray-800">{order.nama}</h2>
+                  <h2 className="font-semibold text-gray-700">{order.nama}</h2>
 
                   {order.kodeBarang && (
-                    <p className="text-xs text-gray-400 mt-1">
-                      {order.kodeBarang}
+                    <p className="text-xs text-gray-500 mt-1">
+                      📦 Kode: {order.kodeBarang}
                     </p>
                   )}
 
@@ -158,7 +158,7 @@ export default function Dashboard() {
                   )}
 
                   {order.hasil && (
-                    <div className="text-xs mt-3 bg-gray-50 p-2 rounded-lg">
+                    <div className="text-xs mt-3 bg-gray-50 p-3 rounded-xl border border-gray-100">
                       <p>
                         S:{order.hasil.s} M:{order.hasil.m} L:{order.hasil.l}{" "}
                         XL:{order.hasil.xl}
@@ -176,7 +176,7 @@ export default function Dashboard() {
                           setSelectedOrder(order);
                           setModalType("proses");
                         }}
-                        className="w-full bg-gray-900 text-white py-2 rounded-lg text-sm hover:opacity-90"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-medium transition"
                       >
                         Mulai
                       </button>
@@ -219,14 +219,14 @@ export default function Dashboard() {
       {modalType === "proses" && selectedOrder && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 animate-scaleIn">
-            <h2 className="text-lg font-semibold text-gray-800 mb-1">
+            <h2 className="text-lg font-semibold text-gray-700 mb-1">
               Mulai Produksi
             </h2>
             <p className="text-sm text-gray-400 mb-4">Masukkan nama pemotong</p>
 
             <input
               type="text"
-              placeholder="Contoh: Rafi"
+              placeholder="Dimas"
               className="w-full border border-gray-200 rounded-xl p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               onChange={(e) => setNamaPemotong(e.target.value)}
             />
@@ -261,7 +261,7 @@ export default function Dashboard() {
       {modalType === "selesai" && selectedOrder && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-1">
+            <h2 className="text-lg font-semibold text-gray-700 mb-1">
               Hasil Produksi
             </h2>
             <p className="text-sm text-gray-400 mb-4">Input jumlah tiap size</p>
