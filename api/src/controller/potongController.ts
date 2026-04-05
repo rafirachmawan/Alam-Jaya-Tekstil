@@ -32,7 +32,7 @@ export default class PermintaanProdukController {
         },
       });
 
-      const data = permintaanProduk.map((item) => ({
+      const data = permintaanProduk.map((item : any) => ({
         id_permintaan: item.id, // Ganti nama di sini
         nama_produk: item.namaProduk,
         jumlah: item.jumlah,
@@ -42,6 +42,7 @@ export default class PermintaanProdukController {
       }));
       return res.json(data);
     } catch (error) {
+      console.error(error);
       return res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -115,7 +116,7 @@ export default class PermintaanProdukController {
         },
       });
 
-      const data = permintaanProduk.map((item) => ({
+      const data = permintaanProduk.map((item : any) => ({
         id_permintaan: item.id,
         nama_produk: item.namaProduk,
         kode_kain: item.kodeKain,
@@ -242,7 +243,7 @@ export default class PermintaanProdukController {
         },
       });
 
-      const data = stokPotong.map((item) => ({
+      const data = stokPotong.map((item : any) => ({
         id_stok_potong: item.id,
         id_permintaan: item.permintaan.id,
         nama_produk: item.namaProduk,
@@ -325,7 +326,7 @@ export default class PermintaanProdukController {
         },
       });
 
-      const data = stokPotong.map((item) => ({
+      const data = stokPotong.map((item : any) => ({
         id_stok_potong: item.id,
         id_permintaan: item.permintaan.id,
         ukuran: item.ukuran,
