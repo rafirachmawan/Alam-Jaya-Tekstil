@@ -489,7 +489,7 @@ export default function PotongMobile(props: any) {
                 >
                   {job.urgent && <p className="text-red-500 text-xs">Urgent</p>}
 
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-black">
                     <div>
                       <p className="text-sm">{job.nama}</p>
 
