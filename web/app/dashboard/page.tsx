@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getData } from "@/services/getData";
+import { getData } from "@/services/useGetPermintaan";
 import { useRouter } from "next/navigation";
 import PotongMobile from "./PotongMobile";
 import PotongWeb from "./PotongWeb";

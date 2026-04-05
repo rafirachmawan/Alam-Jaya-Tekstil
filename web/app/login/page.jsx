@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useSession } from "@/hooks/useSession";
+import { useGetPermintaan } from "@/services/useGetPermintaan";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,6 +15,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [roleUI, setRoleUI] = useState("resi");
   const { session } = useSession();
+
+  const {data, isLoading} = useGetPermintaan();
+
+  console.log(data);
 
   useEffect(() => {
     setMounted(true);
