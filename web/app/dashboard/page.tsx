@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { getData } from "@/services/getData";
 import { useRouter } from "next/navigation";
-import PotongMobile from "./PotongMobile";
-import PotongWeb from "./PotongWeb";
+
+import PotongWeb from "@/container/potong/web/potong-web";
+import PotongMobile from "@/container/potong/mobile/potong-mobile";
 
 export default function Page() {
   const [orders, setOrders] = useState<any[]>([]);
