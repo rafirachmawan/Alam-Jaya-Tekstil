@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import PotongWeb from "@/container/potong/web/potong-web";
 import PotongMobile from "@/container/potong/mobile/potong-mobile";
+import { api } from "@/lib/axios";
 
 export default function Page() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -28,9 +29,21 @@ export default function Page() {
     }
   }, [data]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      const logout = await api.post("/auth/logout");
+      if (!logout.data) {
+        throw new Error("Failed to logout");
+      }
+      console.log("sukses logout server");
+      localStorage.removeItem("token");
+      router.push("/login");
+    } catch (error) {
+      localStorage.removeItem("token");
+      router.push("/login");
+      console.log("sukses logout dummy");
+      console.error("Error logging out:", error);
+    }
   };
 
   const filteredOrders = orders.filter((item) => item.status === activeTab);

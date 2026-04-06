@@ -93,7 +93,7 @@ type StokKirimType = {
   tanggal_kirim: string; // Gunakan string karena format JSON adalah ISO Date
 };
 
-export default function Jobs({ jobs, setJobs, setScreen }: any) {
+export default function Jobs({ setScreen }: any) {
   const [filterStatus, setFilterStatus] = useState<statusType>("menunggu");
   const [search, setSearch] = useState("");
 

@@ -149,6 +149,7 @@ export async function getSession(req: Request, res: Response) {
 
 export async function logout(req: Request, res: Response) {
   const cookies = parseCookies(req.headers.cookie);
+  
   const refreshToken = cookies.refreshToken;
   if (!refreshToken) {
     return res.status(401).json({ message: "Refresh token is missing" });

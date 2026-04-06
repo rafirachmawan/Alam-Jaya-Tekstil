@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useSession } from "@/hooks/useSession";
 import { useGetPermintaan } from "@/services/useGetPermintaan";
+import { useAuthStore } from "@/store/useAuthStore";
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,13 +26,11 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
+
   const handleLogin = async () => {
     console.log("TRY LOGIN:", username, password);
 
     try {
-      // =========================
-      // 🔥 SERVER LOGIN (tetap dipakai)
-      // =========================
       const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
         credentials: "include",
@@ -40,8 +40,10 @@ export default function LoginPage() {
         body: JSON.stringify({ username, password }),
       });
 
-      // kalau server hidup & response OK
+
+    
       if (response.ok) {
+      
         const data = await response.json();
 
         console.log("SERVER LOGIN SUCCESS:", data);
