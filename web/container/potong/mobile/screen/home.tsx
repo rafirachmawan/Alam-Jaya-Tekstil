@@ -4,7 +4,7 @@ import { Package, Briefcase, Bell } from "lucide-react";
 import { useAuthStore } from "@/store/useAuthStore";
 
 type HomeProps = {
-  setScreen: (screen: string) => void;
+  setScreen: (screen: "home" | "stock" | "stockBahan" | "stockProduct" | "jobs") => void;
   handleLogout: () => void;
 };
 
