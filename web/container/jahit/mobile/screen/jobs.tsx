@@ -126,15 +126,31 @@ export default function Jobs({
                     placeholder="kode potongan"
                     value={form.kode}
                     onChange={(e) => setForm({ ...form, kode: e.target.value })}
-                      className="w-full border border-gray-300 mb-2 px-2 py-1 rounded"
+                    className="w-full border border-gray-300 mb-2 px-2 py-1 rounded"
+                  />
+
+                  <input
+                    placeholder="penjahit"
                     value={form.penjahit}
                     onChange={(e) =>
                       setForm({ ...form, penjahit: e.target.value })
                     }
-                      className="w-full border border-gray-300 mb-2 px-2 py-1 rounded"
+                    className="w-full border border-gray-300 mb-2 px-2 py-1 rounded"
+                  />
+
+                  <input
+                    type="date"
+                    value={form.tanggalJahit}
+                    onChange={(e) =>
                       setForm({ ...form, tanggalJahit: e.target.value })
                     }
-                      className="w-full border border-gray-300 mb-3 px-2 py-1 rounded"
+                    className="w-full border border-gray-300 mb-3 px-2 py-1 rounded"
+                  />
+
+                  <button
+                    onClick={() => {
+                      setJobs((prev: any) =>
+                        prev.map((j: any) =>
                           j.id === selectedJob.id
                             ? {
                                 ...j,
@@ -187,7 +203,16 @@ export default function Jobs({
                         tanggalSelesai: e.target.value,
                       })
                     }
-                      className="w-full border border-gray-300 mb-3 px-2 py-1 rounded"
+                    className="w-full border border-gray-300 mb-3 px-2 py-1 rounded"
+                  />
+
+                  <button
+                    onClick={() => {
+                      setJobs((prev: any) =>
+                        prev.map((j: any) =>
+                          j.id === selectedJob.id
+                            ? {
+                                ...j,
                                 status: "selesai",
                                 lolos: form.lolos,
                                 reject: form.reject,

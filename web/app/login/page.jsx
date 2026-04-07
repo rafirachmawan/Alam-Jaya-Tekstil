@@ -7,7 +7,6 @@ import { useSession } from "@/hooks/useSession";
 import { useGetPermintaan } from "@/services/useGetPermintaan";
 import { useAuthStore } from "@/store/useAuthStore";
 
-
 export default function LoginPage() {
   const router = useRouter();
 
@@ -18,14 +17,13 @@ export default function LoginPage() {
   const [roleUI, setRoleUI] = useState("resi");
   const { session } = useSession();
 
-  const {data, isLoading} = useGetPermintaan();
+  const { data, isLoading } = useGetPermintaan();
 
   console.log(data);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
 
   const handleLogin = async () => {
     console.log("TRY LOGIN:", username, password);
@@ -40,10 +38,7 @@ export default function LoginPage() {
         body: JSON.stringify({ username, password }),
       });
 
-
-    
       if (response.ok) {
-      
         const data = await response.json();
 
         console.log("SERVER LOGIN SUCCESS:", data);
@@ -67,6 +62,9 @@ export default function LoginPage() {
           case "QC":
             router.push("/qc");
             break;
+          case "KURIR":
+            router.push("/kurir");
+            break;
           default:
             break;
         }
@@ -87,6 +85,7 @@ export default function LoginPage() {
         potong: "POTONG",
         jahit: "JAHIT",
         qc: "QC",
+        kurir: "KURIR",
       };
 
       if (password === "123" && dummyUsers[username]) {
@@ -113,6 +112,9 @@ export default function LoginPage() {
           case "QC":
             router.push("/qc");
             break;
+          case "KURIR":
+            router.push("/kurir");
+            break;
           default:
             break;
         }
@@ -124,7 +126,7 @@ export default function LoginPage() {
 
   if (!mounted) return null;
 
-  const roles = ["resi", "admin", "potong", "jahit", "qc"];
+  const roles = ["resi", "admin", "potong", "jahit", "qc", "kurir"];
 
   return (
     <div className="min-h-screen flex bg-linear-to-br from-[#0f172a] via-[#1e3a8a] to-[#6d28d9]">

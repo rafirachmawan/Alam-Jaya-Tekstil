@@ -1,13 +1,85 @@
 "use client";
 
-import { Package, ClipboardList, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { Package, ClipboardList, CheckCircle, Truck } from "lucide-react";
 
-export default function PotongWeb(props: any) {
-  const { orders, activeTab, setActiveTab, filteredOrders } = props;
+import { useGetPermintaan } from "@/services/useGetPermintaan";
+import { useGetProses } from "@/services/useGetProses";
+import { useGetStokKirim } from "@/services/useGetStokKirim";
+import { usePutPermintaan } from "@/services/usePutPermintaan";
+import { usePutProses } from "@/services/usePutProses";
+import { usePutStokPotong } from "@/services/usePutStokPotong";
 
-  const count = (status: string) =>
-    orders.filter((o: any) => o.status === status).length;
+type TabType = "menunggu" | "proses" | "kirim";
 
+export default function PotongWeb() {
+  const [activeTab, setActiveTab] = useState<TabType>("menunggu");
+
+  // ================= API =================
+  const { data: dataPermintaan, isLoading: isLoadingPermintaan } =
+    useGetPermintaan();
+
+  const { data: dataProses, isLoading: isLoadingProses } = useGetProses();
+
+  const { data: dataStokKirim, isLoading: isLoadingStokKirim } =
+    useGetStokKirim();
+
+  const { mutate: mutatePermintaan } = usePutPermintaan();
+  const { mutate: mutateProses } = usePutProses();
+  const { mutate: mutateStokKirim } = usePutStokPotong();
+
+  // ================= ACTION =================
+  const handlePermintaan = (item: any) => {
+    mutatePermintaan({
+      id: item.id_permintaan,
+      data: {
+        kode_kain: "WEB",
+        pemotong: "web",
+        pengecek: "web",
+      },
+    });
+  };
+
+  const handleProses = (item: any) => {
+    mutateProses({
+      id: item.id_permintaan,
+      data: {
+        kode_potongan: item.kode_kain,
+        jumlah_lolos: item.jumlah,
+        pengecek: "web",
+      },
+    });
+  };
+
+  const handleKirim = (item: any) => {
+    mutateStokKirim({
+      id: item.id_stok_potong,
+      data: {
+        penjahit: "web",
+        admin: "web",
+        tanggal_kirim: new Date().toISOString(),
+      },
+    });
+  };
+
+  // ================= DATA =================
+  const getData = () => {
+    if (activeTab === "menunggu") return dataPermintaan || [];
+    if (activeTab === "proses") return dataProses || [];
+    if (activeTab === "kirim") return dataStokKirim || [];
+    return [];
+  };
+
+  const isLoading =
+    (activeTab === "menunggu" && isLoadingPermintaan) ||
+    (activeTab === "proses" && isLoadingProses) ||
+    (activeTab === "kirim" && isLoadingStokKirim);
+
+  const countMenunggu = dataPermintaan?.length || 0;
+  const countProses = dataProses?.length || 0;
+  const countKirim = dataStokKirim?.length || 0;
+
+  // ================= UI =================
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* SIDEBAR */}
@@ -15,10 +87,10 @@ export default function PotongWeb(props: any) {
         <h1 className="text-xl font-bold mb-6 text-indigo-600">Potong Panel</h1>
 
         <div className="space-y-3">
-          {["menunggu", "proses", "selesai"].map((menu) => (
+          {["menunggu", "proses", "kirim"].map((menu) => (
             <button
               key={menu}
-              onClick={() => setActiveTab(menu)}
+              onClick={() => setActiveTab(menu as TabType)}
               className={`w-full text-left px-4 py-2 rounded-lg capitalize ${
                 activeTab === menu
                   ? "bg-indigo-600 text-white"
@@ -38,7 +110,6 @@ export default function PotongWeb(props: any) {
           <h2 className="text-2xl font-bold text-gray-800">
             Dashboard Produksi
           </h2>
-
           <div className="text-sm text-gray-500">Divisi Potong</div>
         </div>
 
@@ -48,7 +119,7 @@ export default function PotongWeb(props: any) {
             <Package className="text-indigo-600" />
             <div>
               <p className="text-xs text-gray-500">Menunggu</p>
-              <h3 className="text-lg font-bold">{count("menunggu")}</h3>
+              <h3 className="text-lg font-bold">{countMenunggu}</h3>
             </div>
           </div>
 
@@ -56,54 +127,74 @@ export default function PotongWeb(props: any) {
             <ClipboardList className="text-yellow-500" />
             <div>
               <p className="text-xs text-gray-500">Proses</p>
-              <h3 className="text-lg font-bold">{count("proses")}</h3>
+              <h3 className="text-lg font-bold">{countProses}</h3>
             </div>
           </div>
 
           <div className="bg-white p-4 rounded-xl shadow flex items-center gap-3">
-            <CheckCircle className="text-green-600" />
+            <Truck className="text-green-600" />
             <div>
-              <p className="text-xs text-gray-500">Selesai</p>
-              <h3 className="text-lg font-bold">{count("selesai")}</h3>
+              <p className="text-xs text-gray-500">Kirim</p>
+              <h3 className="text-lg font-bold">{countKirim}</h3>
             </div>
           </div>
         </div>
 
-        {/* TABLE / LIST */}
+        {/* LIST */}
         <div className="bg-white border border-gray-200 rounded-xl shadow p-4">
-          <h3 className="font-semibold mb-4 capitalize">Order {activeTab}</h3>
+          <h3 className="font-semibold mb-4 capitalize">Data {activeTab}</h3>
 
-          <div className="space-y-3">
-            {filteredOrders.map((o: any) => (
-              <div
-                key={o.id}
-                className="border border-gray-200 rounded-lg p-3 flex justify-between items-center"
-              >
-                <div>
-                  <p className="font-medium">{o.nama}</p>
-                  <p className="text-xs text-gray-400">Status: {o.status}</p>
+          {isLoading ? (
+            <p className="text-center text-gray-500">Loading...</p>
+          ) : (
+            <div className="space-y-3">
+              {getData().map((item: any, index: number) => (
+                <div
+                  key={index}
+                  className="border border-gray-200 rounded-lg p-3 flex justify-between items-center"
+                >
+                  <div>
+                    <p className="font-medium">
+                      {item.nama_produk} - {item.ukuran}
+                    </p>
+
+                    {item.is_urgent && (
+                      <p className="text-xs text-red-500 font-bold">URGENT</p>
+                    )}
+                  </div>
+
+                  <div>
+                    {activeTab === "menunggu" && (
+                      <button
+                        onClick={() => handlePermintaan(item)}
+                        className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm"
+                      >
+                        Proses
+                      </button>
+                    )}
+
+                    {activeTab === "proses" && (
+                      <button
+                        onClick={() => handleProses(item)}
+                        className="bg-yellow-500 text-white px-3 py-1 rounded-lg text-sm"
+                      >
+                        Selesai
+                      </button>
+                    )}
+
+                    {activeTab === "kirim" && (
+                      <button
+                        onClick={() => handleKirim(item)}
+                        className="bg-green-600 text-white px-3 py-1 rounded-lg text-sm"
+                      >
+                        Kirim
+                      </button>
+                    )}
+                  </div>
                 </div>
-
-                <div>
-                  {o.status === "menunggu" && (
-                    <button className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm">
-                      Mulai
-                    </button>
-                  )}
-
-                  {o.status === "proses" && (
-                    <button className="bg-gray-800 text-white px-3 py-1 rounded-lg text-sm">
-                      Selesai
-                    </button>
-                  )}
-
-                  {o.status === "selesai" && (
-                    <span className="text-green-600 text-sm">✔ Done</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
