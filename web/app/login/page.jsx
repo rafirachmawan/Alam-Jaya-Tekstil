@@ -40,7 +40,7 @@ export default function LoginPage() {
         console.log("SERVER LOGIN SUCCESS:", data);
 
         localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("role", data.user.role);
+        localStorage.setItem("role", data.user.role.toLowerCase());
 
         setSession({
           session: {
@@ -54,6 +54,7 @@ export default function LoginPage() {
           RESI: "/resi",
           ADMIN: "/admin",
           POTONG: "/potong",
+          STOK_POTONG: "/stok-potong",
           JAHIT: "/jahit",
           QC: "/qc",
           KURIR: "/kurir",
@@ -76,6 +77,7 @@ export default function LoginPage() {
         resi: "RESI",
         admin: "ADMIN",
         potong: "POTONG",
+        stokpotong: "STOK_POTONG",
         jahit: "JAHIT",
         qc: "QC",
         kurir: "KURIR",
@@ -99,6 +101,9 @@ export default function LoginPage() {
           case "POTONG":
             router.push("/potong");
             break;
+          case "STOK_POTONG":
+            router.push("/stok-potong");
+            break;
           case "JAHIT":
             router.push("/penjahit");
             break;
@@ -119,7 +124,15 @@ export default function LoginPage() {
 
   if (!mounted) return null;
 
-  const roles = ["resi", "admin", "potong", "jahit", "qc", "kurir"];
+  const roles = [
+    "resi",
+    "admin",
+    "potong",
+    "stokpotong",
+    "jahit",
+    "qc",
+    "kurir",
+  ];
 
   return (
     <div className="min-h-screen flex bg-linear-to-br from-[#0f172a] via-[#1e3a8a] to-[#6d28d9]">

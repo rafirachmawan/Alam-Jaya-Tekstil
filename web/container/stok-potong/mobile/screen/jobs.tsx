@@ -1,9 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Menunggu from "./jobs-screen/Menunggu";
 import Proses from "./jobs-screen/Proses";
-
-import { useState } from "react";
 import Selesai from "./jobs-screen/Selesai";
 
 type statusType = "menunggu" | "proses" | "selesai";
