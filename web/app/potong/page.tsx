@@ -8,28 +8,20 @@ import { useAuthStore } from "@/store/useAuthStore";
 import PotongWeb from "@/container/potong/web/potong-web";
 import PotongMobile from "@/container/potong/mobile/potong-mobile";
 import { api } from "@/lib/axios";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function Page() {
-  const [orders, setOrders] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState("menunggu");
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [modalType, setModalType] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [orders, setOrders] = useState<any[]>([]);
+  // const [activeTab, setActiveTab] = useState("menunggu");
+  // const [selectedOrder, setSelectedOrder] = useState(null);
+  // const [modalType, setModalType] = useState(null);
+  // const [isMobile, setIsMobile] = useState(false);
 
   const {  session, clearSession } = useAuthStore();
 
   const router = useRouter();
 
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setOrders(data);
-  //   }
-  // }, [data]);
+  const isMobile = useIsMobile();
 
   const handleLogout = async () => {
     try {
@@ -53,17 +45,17 @@ export default function Page() {
     }
   };
 
-  const filteredOrders = orders.filter((item) => item.status === activeTab);
+  // const filteredOrders = orders.filter((item) => item.status === activeTab);
 
   const sharedProps = {
-    orders,
-    activeTab,
-    setActiveTab,
-    filteredOrders,
-    selectedOrder,
-    setSelectedOrder,
-    modalType,
-    setModalType,
+    // orders,
+    // activeTab,
+    // setActiveTab,
+    // // filteredOrders,
+    // // selectedOrder,
+    // setSelectedOrder,
+    // // modalType,
+    // setModalType,
     handleLogout,
     session
   };

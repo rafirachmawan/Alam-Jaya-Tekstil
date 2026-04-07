@@ -15,12 +15,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [roleUI, setRoleUI] = useState("resi");
-  // const { session } = useSession();
-
-  const { data, isLoading } = useGetPermintaan();
-  const { session, setSession, clearSession } = useAuthStore();
-
-  console.log(data);
+  const { session, setSession } = useAuthStore();
 
   useEffect(() => {
     setMounted(true);
@@ -58,7 +53,7 @@ export default function LoginPage() {
         const redirectMap = {
           RESI: "/resi",
           ADMIN: "/admin",
-          POTONG: "/dashboard",
+          POTONG: "/potong",
           JAHIT: "/jahit",
           QC: "/qc",
         };
@@ -70,6 +65,7 @@ export default function LoginPage() {
 
       throw new Error("Server response not OK");
     } catch (error) {
+      console.error("Error logging in:", error);
       console.log("SERVER FAILED → FALLBACK TO DUMMY LOGIN");
 
       // =========================
@@ -100,7 +96,7 @@ export default function LoginPage() {
             router.push("/admin");
             break;
           case "POTONG":
-            router.push("/dashboard");
+            router.push("/potong");
             break;
           case "JAHIT":
             router.push("/penjahit");
