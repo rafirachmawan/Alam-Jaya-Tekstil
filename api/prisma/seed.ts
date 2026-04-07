@@ -19,42 +19,61 @@ async function main() {
 
   const users = [
     {
-      name: "Super Admin",
+      name: "Bagas Super Admin",
       username: "superadmin",
       email: "superadmin@gmail.com",
       role: Role.SUPERADMIN,
     },
     {
-      name: "Bagian Potong",
+      name: "Siti Potong",
       username: "potong",
       email: "potong@gmail.com",
       role: Role.POTONG,
     },
     {
-      name: "Bagian Penjahit",
+      name: "Budi Penjahit",
       username: "penjahit",
       email: "penjahit@gmail.com",
       role: Role.PENJAHIT,
     },
     {
-      name: "Bagian Resi",
+      name: "Dewi Resi",
       username: "resi",
       email: "resi@gmail.com",
       role: Role.RESI,
     },
     {
-      name: "Bagian Print",
+      name: "Andi Print",
       username: "print",
       email: "print@gmail.com",
       role: Role.PRINT,
     },
     {
-      name: "Bagian Gudang",
+      name: "Rian Gudang",
       username: "gudang",
       email: "gudang@gmail.com",
       role: Role.GUDANG,
     },
+    {
+      name: "Eka kurir",
+      username: "kurir",
+      email: "kurir@gmail.com",
+      role: Role.KURIR,
+    },
+    {
+      name: "Sari QC",
+      username: "qc",
+      email: "qc@gmail.com",
+      role: Role.QC,
+    },
+    {
+      name: "Fajar Stok Gudang",
+      username: "stokgudang",
+      email: "stokgudang@gmail.com",
+      role: Role.STOKGUDANG,
+    },
   ];
+
 
   console.log("Memulai seeding data user...");
 

@@ -19,6 +19,9 @@ enum Role {
   RESI
   PRINT
   GUDANG
+  KURIR
+  QC
+  STOKGUDANG
 }
 
 enum StatusPermintaan {
