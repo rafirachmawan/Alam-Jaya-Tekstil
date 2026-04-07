@@ -1,8 +1,8 @@
 "use client";
 
-import { useGetKategoriProduk } from "@/services/useGetKategoriProduk";
-import { useGetStokProdukByKategori } from "@/services/useGetStokProdukByKategori";
-import { usePutStokPotong } from "@/services/usePutStokPotong";
+import { useGetKategoriProduk } from "@/services/potong/useGetKategoriProduk";
+import { useGetStokProdukByKategori } from "@/services/potong/useGetStokProdukByKategori";
+import { usePutStokPotong } from "@/services/potong/usePutStokPotong";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,17 +10,19 @@ import * as z from "zod";
 import { toast } from "sonner";
 
 // 1. Definisi Tipe dan Skema
-interface StokKirimFormData {
-  penjahit: string;
-  admin: string;
-  tanggal_kirim: string;
-}
+// interface StokKirimFormData {
+//   penjahit: string;
+//   admin: string;
+//   tanggal_kirim: string;
+// }
 
-const kirimSchema: z.ZodType<StokKirimFormData> = z.object({
+const kirimSchema = z.object({
   penjahit: z.string().min(1, "Nama penjahit wajib diisi"),
   admin: z.string().min(1, "Nama admin wajib diisi"),
   tanggal_kirim: z.string().min(1, "Tanggal wajib diisi"),
 });
+
+type StokKirimFormData = z.infer<typeof kirimSchema>;
 
 type kategoriProdukType = {
   id: string;
