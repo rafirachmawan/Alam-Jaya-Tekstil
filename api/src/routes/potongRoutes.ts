@@ -36,7 +36,7 @@ const router = Router();
  *                   kategori:
  *                     type: string
  *                     example: "hoodie"
- *                   size:
+ *                   ukuran:
  *                     type: string
  *                     example: "L"
  *                   isUrgent:
@@ -95,14 +95,14 @@ router.put(
  *               - id_permintaan: "38dfdad1-bae0-46ab-906c-beb1f7bf4636"
  *                 namaBarang: "Hoodie Green Navy"
  *                 kategori: "hoodie"
- *                 size: "L"
+ *                 ukuran: "L"
  *                 isUrgent: false
  *                 jumlah_minta: 20
  *                 tanggalMasukPermintaan: "2023-01-01T00:00:00.000Z"
  *               - id_permintaan: "0c1c31a8-8c3d-4d96-a362-c764698d74b8"
  *                 namaBarang: "Kaos Hitam"
  *                 kategori: "kaos"
- *                 size: "XL"
+ *                 ukuran: "XL"
  *                 isUrgent: true
  *                 jumlah_minta: 40
  *                 tanggalMasukPermintaan: "2025-04-08T00:00:00.000Z"
@@ -120,7 +120,7 @@ router.get("/proses", PotongController.getPermintaanProses);
  *         name: id_permintaan
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -144,7 +144,8 @@ router.get("/proses", PotongController.getPermintaanProses);
  *         content:
  *           application/json:
  *             example:
- *               message: "Data produksi berhasil diinput dan status selesai"
+ *               message: "Permintaan potongan berhasil di proses"
+ *               status : ""
  */
 router.put("/proses/:id_permintaan", PotongController.updatePermintaanProses);
 
@@ -160,13 +161,20 @@ router.put("/proses/:id_permintaan", PotongController.updatePermintaanProses);
  *         content:
  *           application/json:
  *             example:
- *               - id_permintaan: 1
- *                 productName: "Hoodie Green Navy"
- *                 size: "L"
+ *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *                 namaBarang: "Hoodie Green Navy"
+ *                 ukuran: "L"
  *                 kode_kain: "AD-0123"
  *                 pemotong: "Budi"
+ *                 jumlah_diminta: 15
  *                 jumlah_hasil: 20
- *                 status: "Selesai"
+ *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *                 namaBarang: "Hoodie Black gray"
+ *                 ukuran: "L"
+ *                 kode_kain: "AD-0125"
+ *                 pemotong: "Budi"
+ *                 jumlah_diminta: 25
+ *                 jumlah_hasil: 20
  */
 router.get("/selesai", PotongController.getPermintaanSelesai);
 
