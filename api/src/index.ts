@@ -48,6 +48,9 @@ const swaggerOptions = {
   apis: ["./src/routes/*.ts", "./src/index.ts"],
 };
 
+console.log(process.env["DATABASE_URL"]);
+console.log(urlServerSwagger)
+
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
