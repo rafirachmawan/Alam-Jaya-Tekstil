@@ -147,6 +147,7 @@ router.get("/proses", PotongController.getPermintaanProses);
  *               message: "Permintaan potongan berhasil di proses"
  *               status : ""
  */
+
 router.put("/proses/:id_permintaan", PotongController.updatePermintaanProses);
 
 /**

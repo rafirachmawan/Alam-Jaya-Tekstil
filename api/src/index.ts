@@ -3,6 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 import potongRoutes from "./routes/potongRoutes";
 import stokPotongRoutes from "./routes/stokPotongRoutes";
+import kurirRoutes from "./routes/kurirRoutes";
 import cookieParser from "cookie-parser";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -51,6 +52,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/potong", potongRoutes);
 app.use("/stokpotong", stokPotongRoutes);
+app.use("/kurir", kurirRoutes);
 
 app.listen(port, () => {
   console.log(`Aplikasi berjalan di http://localhost:${port}`);
