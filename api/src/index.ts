@@ -4,6 +4,9 @@ import authRoutes from "./routes/authRoutes";
 import potongRoutes from "./routes/potongRoutes";
 import stokPotongRoutes from "./routes/stokPotongRoutes";
 import kurirRoutes from "./routes/kurirRoutes";
+import penjahitRoutes from "./routes/penjahitRoutes";
+import qcRoutes from "./routes/qcRoutes";
+import stokGudangRoutes from "./routes/stokGudangRoutes";
 import cookieParser from "cookie-parser";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -22,6 +25,11 @@ app.use(
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+const urlServerSwagger =
+  process.env.NODE_ENV == "production"
+    ? "https://alam-jaya-tekstil.onrender.com"
+    : "http://localhost:3001";
+
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -32,7 +40,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3001",
+        url: urlServerSwagger,
       },
     ],
   },
@@ -48,11 +56,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Selamat datang di API Alam Jaya Textile" });
 });
 
-
 app.use("/auth", authRoutes);
 app.use("/potong", potongRoutes);
 app.use("/stokpotong", stokPotongRoutes);
 app.use("/kurir", kurirRoutes);
+app.use("/penjahit", penjahitRoutes);
+app.use("/qc", qcRoutes);
+app.use("/stokgudang", stokGudangRoutes);
 
 app.listen(port, () => {
   console.log(`Aplikasi berjalan di http://localhost:${port}`);

@@ -209,4 +209,40 @@ router.get("/datastok", StokPotong.getStokProsesPengecekan);
 
 router.put("/datastok/:id_stok_potong", StokPotong.getStokProsesPengecekan);
 
+/**
+ * @swagger
+ * /stokpotong/list-pengecek:
+ *   get:
+ *     summary: Mendapatkan daftar semua user Pengecek
+ *     tags: [StokPotong]
+ *     responses:
+ *       200:
+ *         description: Berhasil mendapatkan list user
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: "uuid-pengecek-1"
+ *                 nama: "Andi Pengecek"
+ */
+router.get("/list-pengecek", () => {});
+
+/** 
+ * @swagger
+ * /stokpotong/list-penjahit:
+ *   get:
+ *     summary: Mendapatkan daftar semua user Penjahit
+ *     tags: [StokPotong]
+ *     responses:
+ *       200:
+ *         description: Berhasil mendapatkan list user
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: "uuid-penjahit-1"
+ *                 nama: "Siti Penjahit"
+ */
+router.get("/list-penjahit", () => {}); 
+
+
+
 export default router;
