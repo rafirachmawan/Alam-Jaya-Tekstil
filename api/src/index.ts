@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 // import "dotenv/config";
+import serverless from "serverless-http";
 import authRoutes from "./routes/authRoutes";
 import potongRoutes from "./routes/potongRoutes";
 import stokPotongRoutes from "./routes/stokPotongRoutes";
@@ -25,6 +26,8 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 const port = 3001;
+
+const router = express.Router();
 
 app.use(express.json());
 app.use(
@@ -66,7 +69,7 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.json({ message: "Selamat datang di API Alam Jaya Textile" });
 });
 
@@ -115,7 +118,7 @@ app.get("/", (req, res) => {
  *               status: "MENUNGGU_GUDANG"
  */
 
-app.post("/create/permintaan", async (req, res) => {
+router.post("/create/permintaan", async (req, res) => {
   try {
     const {
       namaBarang,
@@ -168,14 +171,22 @@ app.post("/create/permintaan", async (req, res) => {
 });
 // ================================
 
-app.use("/auth", authRoutes);
-app.use("/potong", potongRoutes);
-app.use("/stokpotong", stokPotongRoutes);
-app.use("/kurir", kurirRoutes);
-app.use("/penjahit", penjahitRoutes);
-app.use("/qc", qcRoutes);
-app.use("/stokgudang", stokGudangRoutes);
+router.use("/auth", authRoutes);
+router.use("/potong", potongRoutes);
+router.use("/stokpotong", stokPotongRoutes);
+router.use("/kurir", kurirRoutes);
+router.use("/penjahit", penjahitRoutes);
+router.use("/qc", qcRoutes);
+router.use("/stokgudang", stokGudangRoutes);
 
-app.listen(port, () => {
-  console.log(`Aplikasi berjalan di http://localhost:${port}`);
-});
+app.use("/.netlify/functions/index", router);
+
+// 4. Kondisikan app.listen (Hanya untuk Lokal)
+if (process.env.NODE_ENV !== "production") {
+  const port = 3001;
+  app.listen(port, () => {
+    console.log(`Aplikasi berjalan di http://localhost:${port}`);
+  });
+}
+
+export const handler = serverless(app);

@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  functions = "dist"
+  publish = "public"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/index"
+  status = 200
+
+[functions]
+  node_bundle = true
