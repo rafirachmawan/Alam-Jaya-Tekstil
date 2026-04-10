@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import TrackLog from "../lib/trackLog";
 import { StatusPermintaan } from "../generated/prisma/enums";
-import { Prisma } from "../generated/prisma/browser";
 
 export default class StokGudangController {
   public static async getDataPermintaan(req: Request, res: Response) {
