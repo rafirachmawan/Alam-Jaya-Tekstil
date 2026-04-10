@@ -1,5 +1,4 @@
 import { Router } from "express";
-import StokPotong from "../controller/stokPotongController";
 import StokPotongController from "../controller/stokPotongController";
 
 const router = Router();
@@ -62,40 +61,45 @@ router.get("/menunggu", StokPotongController.getDataMenunggu);
  *         content:
  *           application/json:
  *             example:
- *               message: "Potong berhasil dipindahkan ke proses"
+ *               message: "Potong sedang diproses pengecekan oleh divisi Stok Potong"
  *               status: "PROSES_STOK_POTONG"
  */
 
-router.put("/menunggu/:id_stok_potong", () => {});
+router.put(
+  "/menunggu/:idStokPotong",
+  StokPotongController.updateStatusMenunggu,
+);
 
 /**
  * @swagger
  * /stokpotong/proses:
  *   get:
- *     summary: Mendapatkan List Potong (Tab Menunggu)
+ *     summary: Mendapatkan List Potong (Tab Proses)
  *     tags: [StokPotong]
  *     responses:
  *       200:
  *         content:
  *           application/json:
  *             example:
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *                 idStokPotong: "dfFDSHFSUDI712e-fe64-4343-a275-5b2de4ad8615"              
  *                 namaBarang: "Hoodie Green Navy"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0123"
+ *                 kodeKain: "AD-0123"
  *                 pemotong: "Budi"
- *                 jumlah_hasil: 20
- *                 tanggal_selesai_potong: "2023-01-01T00:00:00.000Z"
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *                 jumlahHasil: 20
+ *                 tanggalSelesaiPotong: "2023-01-01T00:00:00.000Z"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *                 idStokPotong: "dfFDSHFSUDADe-fe64-4343-a275-5b2de4ad8615"   
  *                 namaBarang: "Hoodie Black gray"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0125"
+ *                 kodeKain: "AD-0125"
  *                 pemotong: "Budi"
- *                 jumlah_hasil: 20
- *                 tanggal_selesai_potong: "2023-01-01T00:00:00.000Z"
+ *                 jumlahHasil: 20
+ *                 tanggalSelesaiPotong: "2023-01-01T00:00:00.000Z"
  */
 
-router.get("/proses/", () => {});
+router.get("/proses/", StokPotongController.getDataProses);
 
 /**
  * @swagger
@@ -229,7 +233,7 @@ router.put("/datastok/:id_stok_potong", () => {});
  */
 router.get("/list-pengecek", () => {});
 
-/** 
+/**
  * @swagger
  * /stokpotong/list-penjahit:
  *   get:
@@ -244,8 +248,6 @@ router.get("/list-pengecek", () => {});
  *               - id: "uuid-penjahit-1"
  *                 nama: "Siti Penjahit"
  */
-router.get("/list-penjahit", () => {}); 
-
-
+router.get("/list-penjahit", () => {});
 
 export default router;

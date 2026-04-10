@@ -62,6 +62,7 @@ model Permintaan {
   jenisPermintaan     JenisPermintaan
   isUrgent            Boolean  @default(false)
   tanggalMasuk        DateTime @default(now())
+  
 
   status              StatusPermintaan
 
@@ -91,6 +92,7 @@ model StokPotong {
   kodeStokPotongan   String?
 
   tanggalMasuk       DateTime @default(now())
+  tanggalCek         DateTime?
   tanggalSelesai     DateTime?
 
   jumlahHasil        Int?
