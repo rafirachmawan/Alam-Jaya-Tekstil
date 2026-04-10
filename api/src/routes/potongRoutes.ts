@@ -12,13 +12,13 @@ const router = Router();
 
 /**
  * @swagger
- * /potong/permintaan:
+ * /potong/menunggu:
  *   get:
  *     summary: DIVISI POTONG (Tab Menunggu)
  *     tags: [Potong]
  *     responses:
  *       200:
- *         description: Daftar permintaan dari gudang yang menunggu untuk dipotong
+ *         description: Daftar menunggu dari gudang yang menunggu untuk dipotong
  *         content:
  *           application/json:
  *             schema:
@@ -26,7 +26,7 @@ const router = Router();
  *               items:
  *                 type: object
  *                 properties:
- *                   id_permintaan:
+ *                   idPermintaan:
  *                     type: string
  *                     format: uuid
  *                     example: "38dfdad1-bae0-46ab-906c-beb1f7bf4636"
@@ -42,7 +42,7 @@ const router = Router();
  *                   isUrgent:
  *                     type: boolean
  *                     example: false
- *                   jumlah_minta:
+ *                   jumlahMinta:
  *                     type: integer
  *                     example: 20
  *                   tanggalMasukPermintaan:
@@ -51,34 +51,31 @@ const router = Router();
  *                     example: "2023-01-01T00:00:00.000Z"
  */
 
-router.get("/permintaan", PotongController.getPermintaanProduk);
+router.get("/menunggu", PotongController.getDataMenunggu);
 
 /**
  * @swagger
- * /potong/permintaan/{id_permintaan}:
+ * /potong/menunggu/{idPermintaan}:
  *   put:
  *     summary: DIVISI POTONG (Tab Menunggu - Modal Pindah ke Proses)
- *     description: Memproses permintaan dari gudang
+ *     description: Memproses menunggu dari gudang
  *     tags: [Potong]
  *     parameters:
  *       - in: path
- *         name: id_permintaan
+ *         name: idPermintaan
  *         required: false
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Berhasil memproses permintaan
+ *         description: Berhasil memproses menunggu
  *         content:
  *           application/json:
  *             example:
  *               message: "Permintaan berhasil dipindahkan ke proses"
  *               status: "PROSES_POTONG"
  */
-router.put(
-  "/permintaan/:id_permintaan",
-  PotongController.updatePermintaanProduk,
-);
+router.put("/menunggu/:idPermintaan", PotongController.updateStatusMenunggu);
 
 /**
  * @swagger
@@ -92,12 +89,12 @@ router.put(
  *         content:
  *           application/json:
  *             example:
- *               - id_permintaan: "38dfdad1-bae0-46ab-906c-beb1f7bf4636"
+ *               - idPermintaan: "38dfdad1-bae0-46ab-906c-beb1f7bf4636"
  *                 namaBarang: "Hoodie Green Navy"
  *                 kategori: "hoodie"
  *                 ukuran: "L"
  *                 isUrgent: false
- *                 jumlah_minta: 20
+ *                 jumlahMinta: 20
  *                 tanggalMasukPermintaan: "2023-01-01T00:00:00.000Z"
  *               - id_permintaan: "0c1c31a8-8c3d-4d96-a362-c764698d74b8"
  *                 namaBarang: "Kaos Hitam"
@@ -107,17 +104,17 @@ router.put(
  *                 jumlah_minta: 40
  *                 tanggalMasukPermintaan: "2025-04-08T00:00:00.000Z"
  */
-router.get("/proses", PotongController.getPermintaanProses);
+router.get("/proses", PotongController.getDataProses);
 
 /**
  * @swagger
- * /potong/proses/{id_permintaan}:
+ * /potong/proses/{idPermintaan}:
  *   put:
  *     summary: Input hasil produksi (Update Proses ke Selesai)
  *     tags: [Potong]
  *     parameters:
  *       - in: path
- *         name: id_permintaan
+ *         name: idPermintaan
  *         required: true
  *         schema:
  *           type: string
@@ -128,16 +125,18 @@ router.get("/proses", PotongController.getPermintaanProses);
  *           schema:
  *             type: object
  *             properties:
- *               kode_kain:
+ *               kodeKain:
  *                 type: string
- *               pemotong:
+ *               idPemotong:
  *                 type: string
- *               jumlah_hasil:
+ *               jumlahHasil:
  *                 type: integer
  *           example:
- *             kode_kain: "AD-0123"
- *             pemotong: "Budi"
- *             jumlah_hasil: 20
+ *             kodeKain: "AD-0123"
+ *             idPemotong:
+ *              - "fasdfdfuf-gfwe6256-dashjdb"
+ *              - "fasdfdfuf-gfwsad256-dashjdb"
+ *             jumlahHasil: 20
  *     responses:
  *       200:
  *         description: Pekerjaan berhasil diselesaikan
@@ -145,10 +144,10 @@ router.get("/proses", PotongController.getPermintaanProses);
  *           application/json:
  *             example:
  *               message: "Permintaan potongan berhasil di proses"
- *               status : ""
+ *               status : "MENUNGGU_STOK_POTONG"
  */
 
-router.put("/proses/:id_permintaan", PotongController.updatePermintaanProses);
+router.put("/proses/:idPermintaan", PotongController.updateStatusProses);
 
 /**
  * @swagger
@@ -162,21 +161,42 @@ router.put("/proses/:id_permintaan", PotongController.updatePermintaanProses);
  *         content:
  *           application/json:
  *             example:
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
  *                 namaBarang: "Hoodie Green Navy"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0123"
- *                 pemotong: "Budi"
- *                 jumlah_diminta: 15
+ *                 kodeKain: "AD-0125"
+ *                 pemotong:
+ *                  - "Budi"
+ *                  - "Bani"
+ *                 jumlah_diminta: 25
  *                 jumlah_hasil: 20
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
  *                 namaBarang: "Hoodie Black gray"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0125"
- *                 pemotong: "Budi"
+ *                 kodeKain: "AD-0125"
+ *                 pemotong:
+ *                  - "Budi"
+ *                  - "Bani"
  *                 jumlah_diminta: 25
  *                 jumlah_hasil: 20
  */
-router.get("/selesai", PotongController.getPermintaanSelesai);
+router.get("/selesai", PotongController.getDataSelesai);
+
+/**
+ * @swagger
+ * /potong/list-pemotong:
+ *   get:
+ *     summary: Mendapatkan daftar semua user Pemotong
+ *     tags: [Potong]
+ *     responses:
+ *       200:
+ *         description: Berhasil mendapatkan list user
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: "uuid-pemotong-1"
+ *                 nama: "Budi Pemotong"
+ */
+router.get("/list-pemotong", PotongController.getListPemotong);
 
 export default router;

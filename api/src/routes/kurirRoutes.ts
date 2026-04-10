@@ -71,7 +71,6 @@ router.get("/menunggu" , () => {});
  *               status : "PROSES_KURIR"
  */
 
-
 router.put("/menunggu/id_stok_potong", () => {});
 
 /**
@@ -117,7 +116,7 @@ router.put("/menunggu/id_stok_potong", () => {});
  *           application/json:
  *             example:
  *               message: "Stok potongan telah sampai di tujuan"
- *               status: "SELESAI"
+ *               status: "MENUNGGU_JAHIT"
  */
 
 router.put("/proses/:id_proses_stok_potong", () => {});
@@ -142,9 +141,26 @@ router.put("/proses/:id_proses_stok_potong", () => {});
  *                 tanggalSampai: "2023-10-27T14:00:00Z"
  * 
  */
+
+
 router.get("/selesai", () => {});
 
-
+/**
+ * @swagger
+ * /kurir/list-kurir:
+ *   get:
+ *     summary: Mendapatkan daftar semua user Kurir
+ *     tags: [Kurir]
+ *     responses:
+ *       200:
+ *         description: Berhasil mendapatkan list user
+ *         content:
+ *           application/json:
+ *             example:
+ *               - id: "uuid-kurir-1"
+ *                 nama: "Agus Kurir"
+ */
+router.get("/list-kurir", () => {});
 
 
 
