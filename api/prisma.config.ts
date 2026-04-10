@@ -2,12 +2,11 @@
 // npm install --save-dev prisma dotenv
 // import "dotenv/config";
 
-import dotenv from 'dotenv';
-// if (process.env.NODE_ENV !== "production") {
-//   const dotenv = await import("dotenv");
+// import dotenv from 'dotenv';
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = await import("dotenv");
   dotenv.config();
-// }
-
+}
 
 import { defineConfig } from "prisma/config";
 

@@ -15,13 +15,13 @@ import { prisma } from "./lib/prisma";
 import TrackLog from "./lib/trackLog";
 import { StatusPermintaan } from "./generated/prisma/browser";
 
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 // Hanya muat .env jika bukan di production
-// if (process.env.NODE_ENV !== "production") {
-//   const dotenv = await import("dotenv");
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = await import("dotenv");
   dotenv.config();
-// }
+}
 
 const app = express();
 const port = 3001;
