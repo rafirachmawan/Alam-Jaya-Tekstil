@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-// import "dotenv/config";
+import "dotenv/config";
 import serverless from "serverless-http";
 import authRoutes from "./routes/authRoutes";
 import potongRoutes from "./routes/potongRoutes";
@@ -19,10 +19,10 @@ import { StatusPermintaan } from "./generated/prisma/browser";
 // import dotenv from 'dotenv';
 
 // Hanya muat .env jika bukan di production
-if (process.env.NODE_ENV !== "production") {
-  const dotenv = await import("dotenv");
-  dotenv.config();
-}
+// if (process.env.NODE_ENV !== "production") {
+//   const dotenv = await import("dotenv");
+//   dotenv.config();
+// }
 
 const app = express();
 const port = 3001;
