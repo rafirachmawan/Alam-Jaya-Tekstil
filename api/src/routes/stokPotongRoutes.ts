@@ -1,5 +1,6 @@
 import { Router } from "express";
 import StokPotong from "../controller/stokPotongController";
+import StokPotongController from "../controller/stokPotongController";
 
 const router = Router();
 /**
@@ -22,23 +23,23 @@ const router = Router();
  *         content:
  *           application/json:
  *             example:
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
  *                 namaBarang: "Hoodie Green Navy"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0123"
+ *                 kodeKain: "AD-0123"
  *                 pemotong: "Budi"
- *                 jumlah_hasil: 20
- *                 tanggal_selesai_potong: "2023-01-01T00:00:00.000Z"
- *               - id_permintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *                 jumlahHasil: 20
+ *                 tanggalSelesaiPotong: "2023-01-01T00:00:00.000Z"
+ *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
  *                 namaBarang: "Hoodie Black gray"
  *                 ukuran: "L"
- *                 kode_kain: "AD-0125"
+ *                 kodeKain: "AD-0125"
  *                 pemotong: "Budi"
- *                 jumlah_hasil: 20
- *                 tanggal_selesai_potong: "2023-01-01T00:00:00.000Z"
+ *                 jumlahHasil: 20
+ *                 tanggalSelesaiPotong: "2023-01-01T00:00:00.000Z"
  */
 
-router.get("/menunggu", () => {});
+router.get("/menunggu", StokPotongController.getDataMenunggu);
 
 /**
  * @swagger
