@@ -15,13 +15,13 @@ import { prisma } from "./lib/prisma";
 import TrackLog from "./lib/trackLog";
 import { StatusPermintaan } from "./generated/prisma/browser";
 
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 // Hanya muat .env jika bukan di production
-if (process.env.NODE_ENV !== "production") {
-  const dotenv = await import("dotenv");
+// if (process.env.NODE_ENV !== "production") {
+//   const dotenv = await import("dotenv");
   dotenv.config();
-}
+// }
 
 const app = express();
 const port = 3001;
@@ -145,15 +145,8 @@ app.post("/create/permintaan", async (req, res) => {
         status: "MENUNGGU_GUDANG",
       },
     });
-    await TrackLog.logPermintaan(
-      newPermintaan.id,
-      "Permintaan produk berhasil dibuat",
-      StatusPermintaan.MENUNGGU_GUDANG,
-    );
-    await TrackLog.logStatus(
-      newPermintaan.id,
-      StatusPermintaan.MENUNGGU_GUDANG,
-    );
+    await TrackLog.logPermintaan(newPermintaan.id, "Permintaan produk berhasil dibuat", StatusPermintaan.MENUNGGU_GUDANG);
+    await TrackLog.logStatus(newPermintaan.id, StatusPermintaan.MENUNGGU_GUDANG);
     return res.json({
       message: "Permintaan produk berhasil dikirim",
       status: StatusPermintaan.MENUNGGU_GUDANG,
