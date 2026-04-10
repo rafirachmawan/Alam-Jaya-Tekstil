@@ -24,6 +24,7 @@ const router = Router();
  *           application/json:
  *             example:
  *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4ad8615"
+ *                 idStokPotong: "dfFDSHFSUDI712e-fe64-4343-a275-5b2de4ad8615"
  *                 namaBarang: "Hoodie Green Navy"
  *                 ukuran: "L"
  *                 kodeKain: "AD-0123"
@@ -31,6 +32,7 @@ const router = Router();
  *                 jumlahHasil: 20
  *                 tanggalSelesaiPotong: "2023-01-01T00:00:00.000Z"
  *               - idPermintaan: "dfc3712e-fe64-4343-a275-5b2de4kjnnas"
+ *                 idStokPotong: "MBNJKYTU12e-fe64-4343-a275-5b2de4ad8615"
  *                 namaBarang: "Hoodie Black gray"
  *                 ukuran: "L"
  *                 kodeKain: "AD-0125"
@@ -43,14 +45,14 @@ router.get("/menunggu", StokPotongController.getDataMenunggu);
 
 /**
  * @swagger
- * /stokpotong/menunggu/{id_stok_potong}:
+ * /stokpotong/menunggu/{idStokPotong}:
  *   put:
  *     summary: DIVISI STOK POTONG (Tab Menunggu - Modal Pindah ke Proses - Cek Potong)
  *     description: Memproses permintaan dari stok dan merubah status ke PROSES
  *     tags: [StokPotong]
  *     parameters:
  *       - in: path
- *         name: id_stok_potong
+ *         name: idStokPotong
  *         required: false
  *         schema:
  *           type: string
