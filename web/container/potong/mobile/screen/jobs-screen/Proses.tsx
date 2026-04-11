@@ -143,73 +143,72 @@ export default function Proses() {
           onClick={handleCloseModal}
         >
           <form
-            className="bg-white p-4 rounded-xl w-full max-w-sm"
+            className="bg-white p-5 rounded-2xl w-full max-w-sm shadow-2xl"
             onClick={(e) => e.stopPropagation()}
             onSubmit={handleSubmit(onSubmit)}
           >
-            {selectedProses.is_urgent && (
-              <p className="text-red-500 text-md uppercase font-bold mb-1">
-                Urgent
+            {/* HEADER */}
+            <div className="flex justify-between items-start mb-3">
+              <p className="text-sm font-semibold text-gray-800 leading-snug">
+                {selectedProses.nama_produk} - {selectedProses.ukuran}
               </p>
-            )}
 
-            <div className="flex justify-between mb-2">
-              <p className="text-md text-gray-800 font-semibold">
-                {selectedProses.nama_produk}
+              <p className="text-lg font-bold text-gray-900">
+                {selectedProses.jumlah}
               </p>
-              <p className="font-bold text-gray-800">{selectedProses.jumlah}</p>
             </div>
 
-            <hr className="mb-3 border-gray-300" />
+            {/* DIVIDER */}
+            <div className="h-px bg-gray-200 mb-4" />
 
-            {/* Input Kode Potongan */}
-            <div className="mb-2">
+            {/* INPUT */}
+            <div className="space-y-3">
+              {/* KODE KAIN */}
               <input
                 {...register("kode_potongan")}
-                placeholder="kode potongan"
-                className="w-full border border-gray-300 text-gray-900 px-2 py-1.5 rounded text-sm focus:ring-2 focus:ring-purple-300 outline-none"
+                placeholder="Kode Kain"
+                className="w-full bg-gray-100 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-400"
               />
               {errors.kode_potongan && (
-                <p className="text-[10px] text-red-500 mt-0.5">
+                <p className="text-[10px] text-red-500 -mt-2">
                   {errors.kode_potongan.message}
                 </p>
               )}
-            </div>
 
-            {/* Input Jumlah Lolos */}
-            <div className="mb-2">
+              {/* PEMOTONG (gunakan pengecek kalau memang sesuai backend) */}
+              <input
+                {...register("pengecek")}
+                placeholder="Pemotong / Pengecek"
+                className="w-full bg-gray-100 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-400"
+              />
+              {errors.pengecek && (
+                <p className="text-[10px] text-red-500 -mt-2">
+                  {errors.pengecek.message}
+                </p>
+              )}
+
+              {/* JUMLAH HASIL */}
               <input
                 {...register("jumlah_lolos")}
-                placeholder="jumlah lolos"
-                className="w-full border border-gray-300 text-gray-900 px-2 py-1.5 rounded text-sm focus:ring-2 focus:ring-purple-300 outline-none"
+                placeholder="Jumlah hasil"
+                className="w-full bg-gray-100 rounded-xl px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-400"
               />
               {errors.jumlah_lolos && (
-                <p className="text-[10px] text-red-500 mt-0.5">
+                <p className="text-[10px] text-red-500 -mt-2">
                   {errors.jumlah_lolos.message}
                 </p>
               )}
             </div>
 
-            {/* Input Pengecek */}
-            <div className="mb-4">
-              <input
-                {...register("pengecek")}
-                placeholder="pengecek"
-                className="w-full border border-gray-300 text-gray-900 px-2 py-1.5 rounded text-sm focus:ring-2 focus:ring-purple-300 outline-none"
-              />
-              {errors.pengecek && (
-                <p className="text-[10px] text-red-500 mt-0.5">
-                  {errors.pengecek.message}
-                </p>
-              )}
+            {/* BUTTON */}
+            <div className="flex justify-end mt-5">
+              <button
+                type="submit"
+                className="bg-gradient-to-r from-orange-400 to-amber-500 text-white text-xs px-5 py-2 rounded-xl font-semibold shadow hover:opacity-90 active:scale-95 transition"
+              >
+                SELESAI
+              </button>
             </div>
-
-            <button
-              type="submit"
-              className="bg-purple-500 text-white text-xs px-4 py-2 rounded float-right font-semibold hover:bg-purple-600 transition-colors"
-            >
-              cek
-            </button>
           </form>
         </div>
       )}

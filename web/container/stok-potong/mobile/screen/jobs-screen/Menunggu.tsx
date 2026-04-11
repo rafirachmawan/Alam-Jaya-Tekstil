@@ -20,15 +20,23 @@ export default function MenungguStock() {
         data.map((item: stockType, index: number) => (
           <div
             key={`${item.id}-${index}`}
-            className="border border-gray-300 rounded-2xl p-4 flex justify-between items-center"
+            className="bg-white border border-gray-100 rounded-xl px-3 py-3 shadow-sm"
           >
-            <div>
-              <p className="text-sm font-semibold text-gray-800">
+            {/* HEADER */}
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-xs font-semibold text-gray-800">
                 {item.nama_produk} - {item.ukuran}
               </p>
+
+              <p className="text-lg font-bold text-gray-900">{item.jumlah}</p>
             </div>
 
-            <p className="text-2xl font-bold text-gray-800">{item.jumlah}</p>
+            {/* DETAIL */}
+            <div className="text-[11px] text-gray-600 space-y-0.5">
+              <p>• Kode Kain</p>
+              <p>• Nama Pemotong</p>
+              <p>• Tanggal Selesai Potong</p>
+            </div>
           </div>
         ))
       ) : (
