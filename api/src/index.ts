@@ -3,18 +3,23 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { prisma } from './lib/prisma';
-import TrackLog from './lib/trackLog';
-import { StatusPermintaan } from './generated/prisma/browser';
+import { prisma } from './lib/prisma.js';
+import TrackLog from './lib/trackLog.js';
+import { StatusPermintaan } from './generated/prisma/browser.js';
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // Route imports
-import authRoutes from './routes/authRoutes';
-import potongRoutes from './routes/potongRoutes';
-import stokPotongRoutes from './routes/stokPotongRoutes';
-import kurirRoutes from './routes/kurirRoutes';
-import penjahitRoutes from './routes/penjahitRoutes';
-import qcRoutes from './routes/qcRoutes';
-import stokGudangRoutes from './routes/stokGudangRoutes';
+import authRoutes from './routes/authRoutes.js';
+import potongRoutes from './routes/potongRoutes.js';
+import stokPotongRoutes from './routes/stokPotongRoutes.js';
+import kurirRoutes from './routes/kurirRoutes.js';
+import penjahitRoutes from './routes/penjahitRoutes.js';
+import qcRoutes from './routes/qcRoutes.js';
+import stokGudangRoutes from './routes/stokGudangRoutes.js';
 
 // 1. Load ENV
 if (process.env.NODE_ENV !== 'production') {
@@ -114,10 +119,10 @@ app.use('/qc', qcRoutes);
 app.use('/stokgudang', stokGudangRoutes);
 
 // 5. Start Server
-// if (process.env.NODE_ENV !== 'production') {
-  // const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
-// }
+}
 export default app; 

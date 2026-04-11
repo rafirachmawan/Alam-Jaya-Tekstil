@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../lib/prisma.js';
 import * as bcrypt from 'bcryptjs';
-import AuthService from '../services/authService';
+import AuthService from '../services/authService.js';
 
 const jwtSecret = process.env.JWT_SECRET!;
 

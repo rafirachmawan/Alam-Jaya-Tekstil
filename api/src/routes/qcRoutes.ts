@@ -1,6 +1,6 @@
 import {  Router } from "express";
 import type { Request, Response } from "express";
-import StokPotong from "../controller/stokPotongController";
+import StokPotong from "../controller/stokPotongController.js";
 
 const router = Router();
 
